@@ -1,23 +1,25 @@
 <template>
   <div class="flex h-screen">
-    <aside class="w-64 bg-gray-900 text-white p-4">
-      <div class="text-xl font-bold mb-6">Admin Panel</div>
-      <nav>
-        <!-- <RouterLink class="block py-2" to="/dashboard">📊 Dashboard</RouterLink>
-        <RouterLink class="block py-2" to="/users">👥 Users</RouterLink>
-        <RouterLink class="block py-2" to="/settings">⚙️ Settings</RouterLink> -->
+    <aside class="w-80 bg-bg text-text p-6 shadow-2xl flex flex-col gap-8">
+      <h1 class="text-2xl font-semibold">Admin Panel</h1>
+      <nav class="flex flex-col gap-2">
+        <!-- <RouterLink class="block py-2" to="/dashboard">📊 Dashboard</RouterLink> -->
+        <RouterLink class="block py-2 rounded-md text-base" to="/users"
+          >Users</RouterLink
+        >
+        <!-- <RouterLink class="block py-2" to="/settings">⚙️ Settings</RouterLink>  -->
       </nav>
     </aside>
 
     <div class="flex-1 flex flex-col overflow-hidden">
       <header
-        class="bg-white shadow px-6 py-4 flex justify-between items-center"
+        class="bg-bg shadow-2xl px-6 py-4 flex justify-between items-center"
       >
         <div class="text-lg font-semibold">Админка</div>
-        <!-- <button @click="logout" class="text-red-500">Выйти</button> -->
+        <button class="text-error">Выйти</button>
       </header>
 
-      <main class="p-6 overflow-auto flex-1">
+      <main class="p-6 overflow-auto flex-1 bg-gray-50">
         <router-view />
       </main>
     </div>

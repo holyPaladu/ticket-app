@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "@/entities/user/userStore";
-import UserTable from "@/widgets/UserTable/ui/userTable.vue";
+import BaseTable from "@/shared/ui/Table.vue";
+import BaseButton from "@/shared/ui/Button.vue";
 import { useRouter } from "vue-router";
+import type { User } from "@/entities/user/userModel";
 
 const userStore = useUserStore();
 const router = useRouter();
 
-const users = userStore.users;
-const loading = userStore.loading;
+const users = ref<User[]>([]);
 
 function onDelete(id: number) {
   if (confirm("Удалить пользователя?")) {
@@ -17,20 +18,31 @@ function onDelete(id: number) {
 }
 function onCreate() {
   router.push({ name: "UserCreate" });
-  10;
 }
 
-onMounted(() => {
-  userStore.loadUsers();
+onMounted(async () => {
+  await userStore.loadUsers();
+  users.value = userStore.users;
 });
 </script>
 
 <template>
-  <div class="p-4">
-    <h1 class="text-xl mb-4">Пользователи</h1>
-    <button @click="onCreate" class="mb-2">Создать пользователя</button>
-    <UserTable :users="users" :loading="loading" @delete="onDelete" />
-    <!-- Модалка для создания/редактирования можно вынести как widget -->
+  <div class="p-4 flex flex-col gap-8">
+    <header class="flex justify-between">
+      <h1 class="text-3xl">Пользователи</h1>
+      <BaseButton
+        @click="onCreate"
+        text="Создать"
+        color="primary"
+        type="outline"
+        class="px-8 py-2 rounded-sm"
+      />
+    </header>
+    <BaseTable
+      :tables="users"
+      :loading="userStore.loading"
+      @delete="onDelete"
+    />
   </div>
 </template>
 
