@@ -77,7 +77,9 @@ onMounted(async () => {
       @edit="onEdit"
     >
       <main class="flex flex-col gap-6">
-        <template v-for="col in userStore.columns">
+        <template
+          v-for="col in userStore.columns.filter((i) => i.key !== 'password')"
+        >
           <TextGroup :title="col.key" :value="userStore.user?.[col.key]" />
         </template>
       </main>

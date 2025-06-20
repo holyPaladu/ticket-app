@@ -82,6 +82,9 @@ defineEmits<{
   background-color: white;
   z-index: 50;
   padding: 3rem 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   &__header {
     display: flex;
