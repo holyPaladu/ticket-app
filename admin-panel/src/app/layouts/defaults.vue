@@ -10,6 +10,12 @@
         >
           Users
         </RouterLink>
+        <RouterLink
+          class="block py-2 rounded-md text-base list--item"
+          to="/products"
+        >
+          Products
+        </RouterLink>
         <!-- <RouterLink class="block py-2" to="/settings">⚙️ Settings</RouterLink>  -->
       </nav>
     </aside>

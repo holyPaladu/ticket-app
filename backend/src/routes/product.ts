@@ -7,7 +7,7 @@ import {
   deleteProduct,
 } from "../services/product";
 
-export const productRoutes = new Elysia({ prefix: "/api/products" })
+export const productRoutes = new Elysia({ prefix: "/products" })
   .get("/", getProducts)
   .get("/:id", getProduct, {
     params: t.Object({ id: t.String({ pattern: "^[0-9]+$" }) }),

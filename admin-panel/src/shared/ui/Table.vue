@@ -27,7 +27,16 @@ defineEmits<{
     <tbody class="table__body">
       <tr v-for="(item, index) in items" :key="index">
         <td v-for="col in columns" :key="String(col.key)">
-          {{ item[col.key] }}
+          <RouterLink
+            :to="`/${String(col.key)}/${item.id}`"
+            class="table__body--link"
+            v-if="typeof item[col.key] === 'object' && item[col.key] !== null"
+          >
+            {{ (item[col.key] as any)?.name ?? "—" }}
+          </RouterLink>
+          <p v-else>
+            {{ item[col.key] }}
+          </p>
         </td>
         <td class="relative flex justify-end">
           <div class="relative group flex justify-end">
@@ -113,6 +122,16 @@ defineEmits<{
         white-space: nowrap;
         text-overflow: ellipsis;
         text-align: start;
+      }
+    }
+
+    &--link {
+      color: var(--color-primary);
+      text-decoration: underline;
+      transition: all 0.2s;
+
+      &:hover {
+        text-underline-offset: 4px;
       }
     }
   }

@@ -1,5 +1,11 @@
 export type UserRole = "admin" | "user";
-export type FieldType = "text" | "email" | "select" | "number" | "password";
+export type FieldType =
+  | "text"
+  | "email"
+  | "select"
+  | "number"
+  | "password"
+  | "table";
 export interface User {
   id: number;
   name: string;

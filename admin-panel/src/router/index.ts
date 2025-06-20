@@ -29,6 +29,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/pages/userPages/edit.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "products",
+        name: "Products",
+        component: () => import("@/pages/product/index.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 ];

@@ -7,7 +7,7 @@ import {
   deleteCategory,
 } from "../services/category";
 
-export const categoryRoutes = new Elysia({ prefix: "/api/categories" })
+export const categoryRoutes = new Elysia({ prefix: "/categories" })
   .get("/", getCategories)
   .get("/:id", getCategory, {
     params: t.Object({ id: t.String({ pattern: "^[0-9]+$" }) }),

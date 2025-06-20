@@ -1,23 +1,23 @@
 <script lang="ts" setup>
+import type { ProductData } from "@/entities/product/productModel";
+import { useProductStore } from "@/entities/product/productStore";
 import { onMounted, ref } from "vue";
-import { useUserStore } from "@/entities/user/userStore";
 import { useRouter } from "vue-router";
-import type { User } from "@/entities/user/userModel";
 
 import BaseTable from "@/shared/ui/Table.vue";
 import BaseButton from "@/shared/ui/Button.vue";
 import TextGroup from "@/shared/ui/TextGroup.vue";
 import asideMenu from "@/features/aside/ui/asideMenu.vue";
 
-const userStore = useUserStore();
+const productStore = useProductStore();
 const router = useRouter();
 
-const users = ref<User[]>([]);
+const products = ref<ProductData[]>([]);
 const show = ref<boolean>(false);
 
 const onShow = async (id: number) => {
   show.value = true;
-  await userStore.findUser(id);
+  await productStore.find(id);
 };
 const closeShow = () => {
   show.value = false;
@@ -25,32 +25,32 @@ const closeShow = () => {
 const onDelete = async (id?: number) => {
   if (!id) return;
   if (confirm("Удалить пользователя?")) {
-    await userStore.removeUser(id);
-    await userStore.loadUsers();
-    users.value = userStore.users;
+    await productStore.remove(id);
+    await productStore.load();
+    products.value = productStore.products;
     closeShow();
   }
 };
 const onEdit = (id?: number) => {
   if (!id) return;
-  router.push({ name: "UserEdit", params: { id } });
+  router.push({ name: "ProductEdit", params: { id } });
   closeShow();
 };
 const onCreate = () => {
-  router.push({ name: "UserCreate" });
+  router.push({ name: "ProductCreate" });
   closeShow();
 };
 
 onMounted(async () => {
-  await userStore.loadUsers();
-  users.value = userStore.users;
+  await productStore.load();
+  products.value = productStore.products;
 });
 </script>
 
 <template>
   <div class="p-4 flex flex-col gap-8">
     <header class="flex justify-between">
-      <h1 class="text-3xl">Пользователи</h1>
+      <h1 class="text-3xl">Продукты</h1>
       <BaseButton
         @click="onCreate"
         color="primary"
@@ -61,9 +61,9 @@ onMounted(async () => {
       </BaseButton>
     </header>
     <BaseTable
-      :items="users"
-      :columns="userStore.columns.filter((i) => i.key !== 'password')"
-      :loading="userStore.loading"
+      :items="products"
+      :columns="productStore.columns.filter((u) => u.key !== 'categoryId')"
+      :loading="productStore.loading"
       @delete="onDelete"
       @edit="onEdit"
       @show="onShow"
@@ -72,20 +72,21 @@ onMounted(async () => {
   <teleport to="body">
     <asideMenu
       v-show="show"
-      :id="userStore.user?.id"
+      :id="productStore.product?.id"
       @close="closeShow"
       @delete="onDelete"
       @edit="onEdit"
     >
       <main class="flex flex-col gap-6">
-        <template
-          v-for="col in userStore.columns.filter((i) => i.key !== 'password')"
-        >
-          <TextGroup :title="col.key" :value="userStore.user?.[col.key]" />
+        <template v-for="col in productStore.columns">
+          <TextGroup
+            :title="col.key"
+            :value="productStore.product?.[col.key]"
+          />
         </template>
       </main>
     </asideMenu>
   </teleport>
 </template>
 
-<style lang="css" scoped></style>
+<style lang="scss" scoped></style>
