@@ -18,7 +18,10 @@ export async function updateUser(
   id: number,
   payload: Partial<User>
 ): Promise<User> {
-  const response = await apiClient.put<{ data: User }>(`/users/${id}`, payload);
+  const response = await apiClient.patch<{ data: User }>(
+    `/users/${id}`,
+    payload
+  );
   return response.data.data;
 }
 export async function deleteUser(id: number): Promise<void> {

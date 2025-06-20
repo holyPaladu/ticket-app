@@ -38,6 +38,10 @@ export const useUserStore = defineStore("user", () => {
     const user = await userApi.createUser(payload);
     users.value.push(user);
   }
+  async function updateUser(id: number, payload: Record<string, string>) {
+    const user = await userApi.updateUser(id, payload);
+    users.value.push(user);
+  }
 
   return {
     users,
@@ -49,5 +53,6 @@ export const useUserStore = defineStore("user", () => {
     findUser,
     deleteUser,
     createUser,
+    updateUser,
   };
 });

@@ -63,7 +63,7 @@ defineEmits<{
           </div>
         </td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td>
           <ul>
             <li>
@@ -73,7 +73,7 @@ defineEmits<{
             </li>
           </ul>
         </td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
 </template>
