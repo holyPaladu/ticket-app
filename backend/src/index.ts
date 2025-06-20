@@ -2,12 +2,10 @@ import { Elysia } from "elysia";
 import dotenv from "dotenv";
 import { swagger } from "@elysiajs/swagger";
 import { staticPlugin } from "@elysiajs/static";
-import path from "path";
 
-import { users } from "./routes/users";
-import { auth } from "./routes/auth";
 import { admin } from "./routes/admin";
 import { jwtPlugin } from "./plugins/jwt";
+import { v1 } from "./routes/version/v1";
 
 dotenv.config();
 
@@ -21,10 +19,9 @@ const app = new Elysia()
       alwaysStatic: true, // позволяет отдавать даже если route совпадает
     })
   )
+  .use(v1)
   .get("/admin/*", () => Bun.file("/app/admin-dist/index.html"))
   .use(admin)
-  .use(auth)
-  .use(users)
   .listen(process.env.PORT || 3000);
 
 console.log(
