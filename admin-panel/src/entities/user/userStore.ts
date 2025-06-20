@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { User } from "./userModel";
+import type { User, ColumnDefinition } from "./userModel";
 import { ref } from "vue";
 import * as userApi from "./userApi";
 
@@ -7,6 +7,14 @@ export const useUserStore = defineStore("user", () => {
   const users = ref<User[]>([]);
   const user = ref<User | null>(null);
   const loading = ref<boolean>(false);
+
+  const columns = ref<ColumnDefinition<User>[]>([
+    { key: "id", type: "number", disabled: true },
+    { key: "name", type: "text" },
+    { key: "email", type: "email" },
+    { key: "password", type: "password" },
+    { key: "role", type: "select", options: ["admin", "user"] },
+  ]);
 
   async function loadUsers(): Promise<void> {
     loading.value = true;
@@ -26,14 +34,20 @@ export const useUserStore = defineStore("user", () => {
   async function deleteUser(id: number): Promise<void> {
     await userApi.deleteUser(id);
   }
+  async function createUser(payload: Record<string, string>) {
+    const user = await userApi.createUser(payload);
+    users.value.push(user);
+  }
 
   return {
     users,
     user,
     loading,
+    columns,
     loadUsers,
     removeUser,
     findUser,
     deleteUser,
+    createUser,
   };
 });

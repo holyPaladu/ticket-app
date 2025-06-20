@@ -2,8 +2,7 @@
 interface Props {
   disabled?: boolean;
   type: "outline" | "filled";
-  color: "primary" | "secondary" | "white";
-  text: string;
+  color: "primary" | "secondary" | "white" | "error";
 }
 defineProps<Props>();
 </script>
@@ -14,12 +13,15 @@ defineProps<Props>();
     class="btn"
     :class="[`btn--${type} btn--${color}`]"
   >
-    {{ text }}
+    <slot />
   </button>
 </template>
 
 <style lang="scss" scoped>
 .btn {
+  display: flex;
+  gap: 1rem;
+
   // Цвета
   &--primary {
     --btn-bg: #007bff;
@@ -41,6 +43,13 @@ defineProps<Props>();
     --btn-border-color: #ccc;
     --btn-color: #333;
     --btn-filled-color: #333;
+  }
+  &--error {
+    --btn-bg: var(--color-error);
+    --btn-bg-rgb-opacity: rgb(239, 68, 68, 0.1);
+    --btn-border-color: var(--color-error);
+    --btn-color: var(--color-error);
+    --btn-filled-color: var(--color-error);
   }
 
   // Outline и filled

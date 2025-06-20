@@ -4,9 +4,12 @@
       <h1 class="text-2xl font-semibold">Admin Panel</h1>
       <nav class="flex flex-col gap-2">
         <!-- <RouterLink class="block py-2" to="/dashboard">📊 Dashboard</RouterLink> -->
-        <RouterLink class="block py-2 rounded-md text-base" to="/users"
-          >Users</RouterLink
+        <RouterLink
+          class="block py-2 rounded-md text-base list--item"
+          to="/users"
         >
+          Users
+        </RouterLink>
         <!-- <RouterLink class="block py-2" to="/settings">⚙️ Settings</RouterLink>  -->
       </nav>
     </aside>
@@ -27,3 +30,17 @@
 </template>
 
 <script setup lang="ts"></script>
+
+<style lang="scss" scoped>
+.list {
+  &--item {
+    padding-inline: calc(var(--spacing) * 4);
+    padding-block: calc(var(--spacing) * 2);
+
+    &:hover {
+      background-color: var(--color-gray-100);
+      border-radius: var(--radius-lg);
+    }
+  }
+}
+</style>

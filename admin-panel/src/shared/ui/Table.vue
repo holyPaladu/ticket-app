@@ -2,40 +2,36 @@
 import { defineEmits } from "vue";
 import moreHoriz from "@/assets/icons/more_horiz.svg";
 import IconBtn from "@/shared/ui/IconButton.vue";
-import { useRouter } from "vue-router";
+import type { ColumnDefinition } from "@/entities/user/userModel";
 
 defineProps<{
   items: T[];
-  columns: (keyof T)[];
+  columns: ColumnDefinition<T>[];
   loading: boolean;
 }>();
 defineEmits<{
   (e: "delete", id: number): void;
+  (e: "edit", id: number): void;
   (e: "show", id: number): Promise<void>;
 }>();
-const router = useRouter();
-
-function onEdit(id: number) {
-  router.push({ name: "UserEdit", params: { id } });
-}
 </script>
 
 <template>
   <table class="table">
     <thead class="table__head">
       <tr>
-        <th v-for="key in columns" :key="String(key)">{{ key }}</th>
+        <th v-for="col in columns" :key="String(col.key)">{{ col.key }}</th>
         <th></th>
       </tr>
     </thead>
     <tbody class="table__body">
       <tr v-for="(item, index) in items" :key="index">
-        <td v-for="key in columns" :key="String(key)">
-          {{ item[key] }}
+        <td v-for="col in columns" :key="String(col.key)">
+          {{ item[col.key] }}
         </td>
         <td class="relative flex justify-end">
           <div class="relative group flex justify-end">
-            <IconBtn>
+            <IconBtn color="base" type="base">
               <img
                 :src="moreHoriz"
                 alt="more-horiz-icons"
@@ -65,6 +61,17 @@ function onEdit(id: number) {
               </li>
             </ul>
           </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <ul>
+            <li>
+              <button @click="$emit('show', 1)" class="list__btn">
+                Показать
+              </button>
+            </li>
+          </ul>
         </td>
       </tr>
     </tbody>
