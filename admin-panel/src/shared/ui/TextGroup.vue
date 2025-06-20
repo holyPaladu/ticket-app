@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import type { Product } from "@/entities/product/productModel";
+
 interface Props {
   title: string;
-  value?: string | number | { id: number; name: string };
+  value?: string | number | { id: number; name: string } | Product[];
   path?: string;
 }
 defineProps<Props>();
@@ -18,12 +20,19 @@ defineProps<Props>();
     >
       {{ value }}
     </p>
+    <table v-else-if="Array.isArray(value) && value.length"></table>
     <RouterLink
-      v-else-if="value"
+      v-else-if="
+        value &&
+        typeof value === 'object' &&
+        !Array.isArray(value) &&
+        'id' in value &&
+        'name' in value
+      "
       :to="`/${path}/${value.id}`"
       class="router-link"
     >
-      {{ value?.name }}
+      {{ value.name }}
     </RouterLink>
   </hgroup>
 </template>

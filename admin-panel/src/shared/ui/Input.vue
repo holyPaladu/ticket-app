@@ -13,7 +13,7 @@ const model = defineModel();
   <label class="w-full flex flex-col gap-2">
     <p class="text-xs leading-4 font-medium">{{ label }}</p>
     <input
-      type="text"
+      :type="type"
       :disabled="disabled"
       :required="required"
       v-model="model"
