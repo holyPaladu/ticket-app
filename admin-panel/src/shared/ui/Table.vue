@@ -47,7 +47,7 @@ defineEmits<{
                 </button>
               </li>
               <li>
-                <button @click="onEdit(item.id)" class="list__btn">
+                <button @click="$emit('edit', item.id)" class="list__btn">
                   Редактировать
                 </button>
               </li>

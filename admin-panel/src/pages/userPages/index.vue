@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { useUserStore } from "@/entities/user/userStore";
 import BaseTable from "@/shared/ui/Table.vue";
 import BaseButton from "@/shared/ui/Button.vue";
+import TextGroup from "@/shared/ui/TextGroup.vue";
 import asideMenu from "@/features/aside/ui/asideMenu.vue";
 import { useRouter } from "vue-router";
 import type { User } from "@/entities/user/userModel";
@@ -74,7 +75,13 @@ onMounted(async () => {
       @close="closeShow"
       @delete="onDelete"
       @edit="onEdit"
-    ></asideMenu>
+    >
+      <main class="flex flex-col gap-6">
+        <template v-for="col in userStore.columns">
+          <TextGroup :title="col.key" :value="userStore.user?.[col.key]" />
+        </template>
+      </main>
+    </asideMenu>
   </teleport>
 </template>
 
