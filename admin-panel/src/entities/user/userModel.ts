@@ -16,6 +16,6 @@ export interface User {
 export type ColumnDefinition<T> = {
   key: keyof T;
   type: FieldType;
-  options?: string[];
+  options?: any[];
   disabled?: boolean;
 };

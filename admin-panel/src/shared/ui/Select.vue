@@ -16,7 +16,13 @@ const model = defineModel();
       v-model="model"
       class="w-full bg-transparent border border-border text-sm leading-6 rounded-md min-h-8.5 outline-none px-2 py-1"
     >
-      <option v-for="opt in options" :value="opt">{{ opt }}</option>
+      <option
+        v-for="opt in options"
+        :key="typeof opt === 'object' && opt !== null ? opt.value : opt"
+        :value="typeof opt === 'object' && opt !== null ? opt.value : opt"
+      >
+        {{ typeof opt === "object" && opt !== null ? opt.label : opt }}
+      </option>
     </select>
   </label>
 </template>

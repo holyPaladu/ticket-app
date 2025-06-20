@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 interface Props {
   label: string;
-  type: "text" | "number";
+  type: "text" | "email" | "select" | "number" | "password" | "table";
   disabled?: boolean;
   required?: boolean;
 }

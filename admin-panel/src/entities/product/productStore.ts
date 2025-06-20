@@ -13,7 +13,7 @@ export const useProductStore = defineStore("product", () => {
     { key: "id", type: "number", disabled: true },
     { key: "name", type: "text" },
     { key: "price", type: "number" },
-    { key: "categoryId", type: "number" },
+    { key: "categoryId", type: "select", options: [] },
     { key: "category", type: "table" },
   ]);
 

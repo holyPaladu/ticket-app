@@ -5,8 +5,4 @@ export interface Category {
   name: string;
 }
 
-export interface CategoryData {
-  id: number;
-  name: string;
-  products?: Product[];
-}
+export type CategoryData = Category & { products?: Product[] };
