@@ -26,3 +26,17 @@ model User {
   role     Role   @default(user)
   email_verified  Boolean @default(false)
 }
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
+model Product {
+  id         Int      @id @default(autoincrement())
+  name       String
+  price      Float
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
