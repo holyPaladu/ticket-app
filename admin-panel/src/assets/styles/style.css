@@ -21,3 +21,14 @@
     cursor: pointer;
   }
 }
+
+@layer components {
+  .router-link {
+    color: var(--color-primary);
+    text-decoration: underline;
+    transition: all 0.2s;
+  }
+  .router-link:hover {
+    text-underline-offset: 4px;
+  }
+}

@@ -78,10 +78,15 @@ onMounted(async () => {
       @edit="onEdit"
     >
       <main class="flex flex-col gap-6">
-        <template v-for="col in productStore.columns">
+        <template
+          v-for="col in productStore.columns.filter(
+            (u) => u.key !== 'categoryId'
+          )"
+        >
           <TextGroup
             :title="col.key"
             :value="productStore.product?.[col.key]"
+            path="category"
           />
         </template>
       </main>

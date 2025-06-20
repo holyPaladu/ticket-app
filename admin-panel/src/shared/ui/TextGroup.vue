@@ -2,6 +2,7 @@
 interface Props {
   title: string;
   value?: string | number | { id: number; name: string };
+  path?: string;
 }
 defineProps<Props>();
 </script>
@@ -17,9 +18,13 @@ defineProps<Props>();
     >
       {{ value }}
     </p>
-    <pre v-else>
-      {{ value }}
-    </pre>
+    <RouterLink
+      v-else-if="value"
+      :to="`/${path}/${value.id}`"
+      class="router-link"
+    >
+      {{ value?.name }}
+    </RouterLink>
   </hgroup>
 </template>
 

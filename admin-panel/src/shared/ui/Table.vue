@@ -29,7 +29,7 @@ defineEmits<{
         <td v-for="col in columns" :key="String(col.key)">
           <RouterLink
             :to="`/${String(col.key)}/${item.id}`"
-            class="table__body--link"
+            class="router-link"
             v-if="typeof item[col.key] === 'object' && item[col.key] !== null"
           >
             {{ (item[col.key] as any)?.name ?? "—" }}
@@ -122,16 +122,6 @@ defineEmits<{
         white-space: nowrap;
         text-overflow: ellipsis;
         text-align: start;
-      }
-    }
-
-    &--link {
-      color: var(--color-primary);
-      text-decoration: underline;
-      transition: all 0.2s;
-
-      &:hover {
-        text-underline-offset: 4px;
       }
     }
   }

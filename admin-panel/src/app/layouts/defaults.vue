@@ -28,7 +28,7 @@
         <button class="text-error">Выйти</button>
       </header>
 
-      <main class="p-6 overflow-auto flex-1 bg-gray-50">
+      <main class="p-6 overflow-auto flex-1 bg-gray-100">
         <router-view />
       </main>
     </div>
