@@ -10,11 +10,15 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const users = ref<User[]>([]);
+const columns = ref<(keyof User)[]>([]);
 
 function onDelete(id: number) {
   if (confirm("Удалить пользователя?")) {
     userStore.removeUser(id);
   }
+}
+async function onShow(id: number) {
+  await userStore.findUser(id);
 }
 function onCreate() {
   router.push({ name: "UserCreate" });
@@ -23,6 +27,12 @@ function onCreate() {
 onMounted(async () => {
   await userStore.loadUsers();
   users.value = userStore.users;
+
+  // Get keys from the first user, or an empty array if no users
+  columns.value =
+    users.value.length > 0
+      ? (Object.keys(users.value[0]) as (keyof User)[])
+      : [];
 });
 </script>
 
@@ -39,9 +49,11 @@ onMounted(async () => {
       />
     </header>
     <BaseTable
-      :tables="users"
+      :items="users"
+      :columns="columns"
       :loading="userStore.loading"
       @delete="onDelete"
+      @show="onShow"
     />
   </div>
 </template>

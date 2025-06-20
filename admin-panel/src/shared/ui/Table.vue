@@ -1,41 +1,70 @@
-<script setup lang="ts">
-import { defineEmits, computed } from "vue";
-// import { useRouter } from "vue-router";
+<script setup lang="ts" generic="T extends { id: number }">
+import { defineEmits } from "vue";
+import moreHoriz from "@/assets/icons/more_horiz.svg";
+import IconBtn from "@/shared/ui/IconButton.vue";
+import { useRouter } from "vue-router";
 
-const props = defineProps<{
-  tables: any[];
+defineProps<{
+  items: T[];
+  columns: (keyof T)[];
   loading: boolean;
 }>();
 defineEmits<{
   (e: "delete", id: number): void;
+  (e: "show", id: number): Promise<void>;
 }>();
-// const router = useRouter();
+const router = useRouter();
 
-const headKeys = computed(() =>
-  props.tables.length > 0 ? Object.keys(props.tables[0]) : []
-);
-
-// function onEdit(id: number) {
-//   router.push({ name: "UserEdit", params: { id } });
-// }
+function onEdit(id: number) {
+  router.push({ name: "UserEdit", params: { id } });
+}
 </script>
 
 <template>
   <table class="table">
     <thead class="table__head">
       <tr>
-        <th v-for="key in headKeys" :key="key">{{ key }}</th>
+        <th v-for="key in columns" :key="String(key)">{{ key }}</th>
         <th></th>
       </tr>
     </thead>
     <tbody class="table__body">
-      <tr v-for="table in tables" :key="table.id">
-        <td v-for="key in headKeys" :key="key">
-          {{ table[key as keyof any] }}
+      <tr v-for="(item, index) in items" :key="index">
+        <td v-for="key in columns" :key="String(key)">
+          {{ item[key] }}
         </td>
-        <td>
-          <!-- <button @click="$emit('delete', user.id)">Удалить</button>
-          <button @click="onEdit(user.id)">Редактировать</button> -->
+        <td class="relative flex justify-end">
+          <div class="relative group flex justify-end">
+            <IconBtn>
+              <img
+                :src="moreHoriz"
+                alt="more-horiz-icons"
+                class="size-6 object-cover"
+              />
+            </IconBtn>
+            <ul
+              class="list border border-gray-100/50 shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity"
+            >
+              <li>
+                <button @click="$emit('show', item.id)" class="list__btn">
+                  Показать
+                </button>
+              </li>
+              <li>
+                <button @click="onEdit(item.id)" class="list__btn">
+                  Редактировать
+                </button>
+              </li>
+              <li>
+                <button
+                  @click="$emit('delete', item.id)"
+                  class="list__btn list--error"
+                >
+                  Удалить
+                </button>
+              </li>
+            </ul>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -57,7 +86,6 @@ const headKeys = computed(() =>
       th {
         padding: 0.75rem 1rem;
         white-space: nowrap;
-        overflow: hidden;
         text-overflow: ellipsis;
         text-align: start;
         font-weight: 600;
@@ -76,11 +104,32 @@ const headKeys = computed(() =>
       td {
         padding: 1rem;
         white-space: nowrap;
-        overflow: hidden;
         text-overflow: ellipsis;
         text-align: start;
       }
     }
+  }
+}
+
+.list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  &__btn {
+    width: 100%;
+    font-size: var(--text-sm);
+    padding: 1rem 2rem;
+
+    &:hover {
+      background-color: var(--color-gray-50);
+      border-radius: var(--radius-md);
+    }
+  }
+  &--error {
+    color: var(--color-error);
   }
 }
 </style>
