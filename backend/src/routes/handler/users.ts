@@ -5,7 +5,7 @@ import {
   deleteUser,
   updateUser,
   createUser,
-} from "../services/users";
+} from "../../services/users";
 
 export const users = new Elysia({ prefix: "/users" })
   .get("/", getUsers)

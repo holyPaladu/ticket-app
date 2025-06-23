@@ -5,7 +5,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
-} from "../services/category";
+} from "../../services/category";
 
 export const categoryRoutes = new Elysia({ prefix: "/categories" })
   .get("/", getCategories)

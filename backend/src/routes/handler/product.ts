@@ -5,7 +5,7 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
-} from "../services/product";
+} from "../../services/product";
 
 export const productRoutes = new Elysia({ prefix: "/products" })
   .get("/", getProducts)
